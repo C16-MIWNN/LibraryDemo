@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Overview of all authors</title>
+</head>
+<body>
+<h1>Overview of all authors</h1>
+
+<form th:action="@{/author/save}" method="post" th:object="${formAuthor}">
+  <table>
+    <tr>
+      <th>Name</th>
+      <th></th>
+    </tr>
+    <tr th:each="author : ${allAuthors}">
+      <td th:text="${author.name}"></td>
+      <td></td>
+    </tr>
+    <tr>
+      <td><input type="text" th:field="*{name}" /></td>
+      <td><input type="submit" value="save author" /></td>
+    </tr>
+  </table>
+</form>
+</body>
+</html>
