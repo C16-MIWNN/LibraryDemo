@@ -7,8 +7,15 @@
 <body>
 <h1>Overview of all the books in the library</h1>
 
-<p>
-    <span th:text="${nu}"></span>
-</p>
+<table>
+    <tr>
+        <th>Title</th>
+        <th>Author</th>
+    </tr>
+    <tr th:each="book : ${allBooks}">
+        <td th:text="${book.title}"></td>
+        <td th:text="${book.author}"></td>
+    </tr>
+</table>
 </body>
 </html>
