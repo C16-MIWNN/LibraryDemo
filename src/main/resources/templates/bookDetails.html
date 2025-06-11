@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<head th:replace="~{fragments/general :: baseheader(~{:: title})}">
+    <title th:text="|Details for book: ${book.title}|"></title>
+</head>
+<body>
+
+<div th:replace="~{fragments/general :: navbar}"></div>
+
+<div class="container my-5" th:object="${book}">
+    <div class="row p-5 g-5 m-2 align-items-center rounded-3 border shadow-lg">
+        <div class="col-4 mt-0">
+            <img class="img-fluid rounded overflow-hidden shadow-lg" th:src="*{imageUrl}" th:alt="|Cover for *{title}|">
+        </div>
+        <div class="col-8 mt-0">
+            <h1 class="display-4 fw-bold lh-1 text-body-emphasis text-center" th:text="*{title}"></h1>
+<!--            <div th:replace="~{fragments/author :: authorCards(*{authors})}"></div>-->
+            <p class="lead" th:text="*{description}"></p>
+            <p class="text-center">
+                <button type="button"
+                   class="btn btn-outline-secondary btn-lg px-4 fw-bold"
+                    data-bs-toggle="modal" data-bs-target="#editForm">
+                    <i class="bi bi-pencil-square"></i> Edit
+                </button>
+                <a role="button"
+                   class="btn btn-outline-danger btn-lg px-4"
+                   th:href="@{/book/delete/{bookTitle}(bookTitle = *{title})}">
+                    <i class="bi bi-trash"></i> Delete
+                </a>
+                <a role="button"
+                   class="btn btn-outline-warning btn-lg px-4"
+                   th:href="@{/copy/new/{bookTitle}(bookTitle = *{title})}">
+                    <i class="bi bi-cash"></i> Buy
+                </a>
+            </p>
+           </div>
+    </div>
+    <div class="row p-5 g-5 mt-5 m-2 align-items-center rounded-3 border shadow-lg">
+        <h2 class="text-center mt-0">Copies</h2>
+        <p class="text-center mt-0" th:text="|*{numberOfAvailableCopies} available out of *{numberOfCopies} total copies.|"></p>
+        <div th:replace="~{fragments/copy :: copyCards(*{copies})}"></div>
+    </div>
+
+</div>
+
+<div th:replace="~{fragments/general :: footer}"></div>
+<div th:replace="~{fragments/general :: bottomScripts}"></div>
+
+<div th:replace="~{fragments/book :: bookFormModal(${formBook}, ${allAuthors}, ${#fields})}"></div>
+</body>
+</html>

@@ -10,28 +10,12 @@
 <div class="container">
     <h1>Overview of all the books in the library</h1>
 
-    <table>
-        <tr>
-            <th>Title</th>
-            <th>Author</th>
-            <th>Copies</th>
-            <th></th>
-            <th></th>
-        </tr>
-        <tr th:each="book : ${allBooks}">
-            <td th:text="${book.title}"></td>
-            <td th:text="${book.authorNames}"></td>
-            <td><span th:text="${book.numberOfAvailableCopies}"></span> / <span th:text="${book.numberOfCopies}"></span></td>
-            <td><a th:href="@{/book/delete/{bookId}(bookId = ${book.bookId})}">delete</a></td>
-            <td><a th:href="@{/copy/new/{bookId}(bookId = ${book.bookId})}">buy</a></td>
-        </tr>
-    </table>
-
-    <a th:href="@{/book/new}">Add new book</a>
+    <div th:replace="~{fragments/book :: bookCardsNew(${allBooks})}"></div>
 </div>
 
 <div th:replace="~{fragments/general :: footer}"></div>
 <div th:replace="~{fragments/general :: bottomScripts}"></div>
 
+<div th:replace="~{fragments/book :: bookFormModal(${formBook}, ${allAuthors}, ${#fields})}"></div>
 </body>
 </html>
