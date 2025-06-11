@@ -15,11 +15,14 @@ public class Author implements Comparable<Author> {
     @GeneratedValue
     private Long authorId;
 
+    @Column(unique = true)
     private String name;
 
     private String imageUrl;
 
-    @ManyToMany(mappedBy = "authors")
+    @ManyToMany(fetch = FetchType.EAGER,
+            mappedBy = "authors",
+            cascade = CascadeType.ALL)
     private Set<Book> books;
 
     @Override

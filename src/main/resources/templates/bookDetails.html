@@ -14,7 +14,7 @@
         </div>
         <div class="col-8 mt-0">
             <h1 class="display-4 fw-bold lh-1 text-body-emphasis text-center" th:text="*{title}"></h1>
-<!--            <div th:replace="~{fragments/author :: authorCards(*{authors})}"></div>-->
+            <div th:replace="~{fragments/author :: authorCards(*{authors})}"></div>
             <p class="lead" th:text="*{description}"></p>
             <p class="text-center">
                 <button type="button"
@@ -40,7 +40,6 @@
         <p class="text-center mt-0" th:text="|*{numberOfAvailableCopies} available out of *{numberOfCopies} total copies.|"></p>
         <div th:replace="~{fragments/copy :: copyCards(*{copies})}"></div>
     </div>
-
 </div>
 
 <div th:replace="~{fragments/general :: footer}"></div>

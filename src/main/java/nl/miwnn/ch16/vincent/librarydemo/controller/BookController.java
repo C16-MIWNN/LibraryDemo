@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
-import java.time.LocalDateTime;
 import java.util.Optional;
 
 /**
@@ -74,7 +73,7 @@ public class BookController {
 
     @PostMapping("/book/save")
     private String saveBook(@ModelAttribute("formBook") Book bookToBeSaved, BindingResult result, Model datamodel) {
-        checkBookTitleExists(bookToBeSaved, result);
+        checkBookTitleIsUnique(bookToBeSaved, result);
 
         if (result.hasErrors() && bookToBeSaved.getBookId() != null) {
             Book originalBookDetails = bookRepository.findById(bookToBeSaved.getBookId()).orElse(new Book());
@@ -87,7 +86,7 @@ public class BookController {
         return "redirect:/book/detail/" + bookToBeSaved.getTitle();
     }
 
-    private void checkBookTitleExists(Book bookToBeSaved, BindingResult result) {
+    private void checkBookTitleIsUnique(Book bookToBeSaved, BindingResult result) {
         Optional<Book> sameName = bookRepository.findByTitle(bookToBeSaved.getTitle());
         if (sameName.isPresent() && !sameName.get().getBookId().equals(bookToBeSaved.getBookId())) {
             result.addError(new FieldError("book", "title", "this title is already in use"));

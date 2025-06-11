@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<body>
+
+<div th:fragment="authorCards(authors)" class="row row-cols-2 g-4 mt-1 align-items-center justify-content-center">
+    <div class="col mt-0" th:each="author : ${authors}" th:insert="~{:: authorCard(${author})}"></div>
+</div>
+
+<div th:fragment="authorCard(author)">
+    <div class="card my-2 mt-1 mx-auto">
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-5">
+                    <img th:src="${author.imageUrl}" class="img-fluid object-fit-cover square-100 cirkel" th:alt="|Image of ${author.name}|">
+                </div>
+                <div class="col-md-7 align-self-center">
+                    <p>
+                        <a th:href="@{/author/detail/{authorName}(authorName = ${author.name})}" class="h3" th:text="${author.name}"></a>
+                    </p>
+                    <small class="text-body-secondary" th:text="|Has ${author.books.size} books in the library|"></small>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div th:fragment="authorForm(formAuthor, #fields)">
+    <form class="row g-3" th:action="@{/author/save}" method="post" th:object="${formAuthor}">
+        <input type="hidden" th:field="*{authorId}">
+        <input type="hidden" th:field="*{books}">
+        <div class="row g-3 align-items-center">
+            <div class="col-5">
+                <label for="name" class="col-form-label">Name</label>
+            </div>
+            <div class="col-7">
+                <input type="text" id="name" class="form-control" aria-describedby="nameHelpInline" th:field="*{name}">
+            </div>
+            <div class="col-12">
+                    <span id="nameHelpInline" class="form-text" th:if="${#fields.hasErrors('name')}" th:errors="*{name}">
+                    </span>
+            </div>
+        </div>
+        <div class="row g-3 align-items-center">
+            <div class="col-5">
+                <label for="imageUrl" class="col-form-label">Image URL</label>
+            </div>
+            <div class="col-7">
+                <input type="url" id="imageUrl" class="form-control" aria-describedby="imageUrlHelpInline" th:field="*{imageUrl}">
+            </div>
+            <div class="col-12">
+                    <span id="imageUrlHelpInline" class="form-text" th:if="${#fields.hasErrors('imageUrl')}" th:errors="*{imageUrl}">
+                    </span>
+            </div>
+        </div>
+        <button type="submit" class="btn btn-primary mb-3">Save author</button>
+    </form>
+</div>
+
+<!-- Modal -->
+<div th:fragment="authorFormModal(formAuthor, #fields)" class="modal fade" id="editForm" tabindex="-1" aria-labelledby="editFormModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <h1 class="modal-title text-center" id="editFormModalLabel">Author edit form</h1>
+            <div class="modal-body">
+                <div class="container-fluid">
+                    <div th:replace="~{:: authorForm(${formAuthor}, ${#fields})}"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script th:unless="${formModalHidden}">
+        new bootstrap.Modal(document.getElementById('editForm'), {}).toggle()
+    </script>
+</div>
+
+</body>
+</html>

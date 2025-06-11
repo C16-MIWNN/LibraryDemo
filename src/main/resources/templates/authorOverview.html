@@ -11,22 +11,7 @@
 <div class="container">
   <h1>Overview of all authors</h1>
 
-  <form th:action="@{/author/save}" method="post" th:object="${formAuthor}">
-    <table>
-      <tr>
-        <th>Name</th>
-        <th></th>
-      </tr>
-      <tr th:each="author : ${allAuthors}">
-        <td th:text="${author.name}"></td>
-        <td></td>
-      </tr>
-      <tr>
-        <td><input type="text" th:field="*{name}" /></td>
-        <td><input type="submit" value="save author" /></td>
-      </tr>
-    </table>
-  </form>
+  <div th:replace="~{fragments/author :: authorCards(${allAuthors})}"></div>
 </div>
 
 <div th:replace="~{fragments/general :: footer}"></div>

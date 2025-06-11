@@ -7,7 +7,7 @@
     <div th:each="book : ${books}" th:insert="~{:: bookCard(book)}"></div>
 </div>
 
-<div th:fragment="bookCardsNew(books)" class="row row-cols-1 row-cols-md-6 g-4">
+<div th:fragment="bookCardsNew(books)" class="row row-cols-1 row-cols-md-6 g-4 mt-1 align-items-center justify-content-center">
     <div th:each="book : ${books}" th:insert="~{:: bookCard(book)}"></div>
 
     <div class="col">
