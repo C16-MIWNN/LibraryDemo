@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:fragment="baseheader(title)">
+    <meta charset="UTF-8">
+    <title th:replace="${title}">This is the base title</title>
+
+    <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap-icons/font/bootstrap-icons.min.css}">
+
+    <link rel="stylesheet" type="text/css" href="/css/library.css" />
+</head>
+<body>
+
+<div th:fragment="navbar">
+    <ul class="nav justify-content-center">
+        <li class="nav-item">
+            <a class="nav-link" th:href="@{/author/overview}">Authors</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" th:href="@{/book/overview}">Books</a>
+        </li>
+    </ul>
+</div>
+
+<div th:fragment="footer">
+    <footer><p class="text-center text text-muted">Copyright Vincent Velthuizen &copy;2025</p></footer>
+</div>
+
+<div th:fragment="bottomScripts">
+    <script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
+</div>
+
+
+</body>
+</html>
