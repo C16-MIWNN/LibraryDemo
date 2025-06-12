@@ -9,8 +9,6 @@ import jakarta.persistence.*;
 
 @Entity
 public class Copy {
-    private static final boolean DEFAULT_AVAILABLE = true;
-
     @Id @GeneratedValue
     private Long copyId;
 
@@ -18,15 +16,6 @@ public class Copy {
 
     @ManyToOne
     private Book book;
-
-    public Copy(Book book) {
-        this.book = book;
-        this.available = DEFAULT_AVAILABLE;
-    }
-
-    // exists for JPA
-    public Copy() {
-    }
 
     public Book getBook() {
         return book;
