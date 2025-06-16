@@ -1,12 +1,16 @@
 package nl.miwnn.ch16.vincent.librarydemo.service;
 
+import nl.miwnn.ch16.vincent.librarydemo.dto.NewLibraryUserDTO;
 import nl.miwnn.ch16.vincent.librarydemo.model.LibraryUser;
 import nl.miwnn.ch16.vincent.librarydemo.repositories.LibraryUserRepository;
+import nl.miwnn.ch16.vincent.librarydemo.service.mappers.LibraryUserMapper;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 /**
  * @author Vincent Velthuizen
@@ -31,5 +35,17 @@ public class LibraryUserService implements UserDetailsService {
     public void saveUser(LibraryUser libraryUser) {
         libraryUser.setPassword(passwordEncoder.encode(libraryUser.getPassword()));
         libraryUserRepository.save(libraryUser);
+    }
+
+    public List<LibraryUser> getAllUsers() {
+        return libraryUserRepository.findAll();
+    }
+
+    public boolean usernameInUse(String username) {
+        return libraryUserRepository.existsByUsername(username);
+    }
+
+    public void save(NewLibraryUserDTO userDtoToBeSaved) {
+        saveUser(LibraryUserMapper.fromDTO(userDtoToBeSaved));
     }
 }

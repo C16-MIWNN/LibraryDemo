@@ -13,7 +13,6 @@ import nl.miwnn.ch16.vincent.librarydemo.service.LibraryUserService;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.context.event.EventListener;
 import org.springframework.core.io.ClassPathResource;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Controller;
 
 import java.io.IOException;
@@ -45,21 +44,19 @@ public class InitializeController {
 
     private void initializeDB() {
         try {
-            LibraryUser libraryUser = new LibraryUser();
-            libraryUser.setUsername("Vincent");
-            libraryUser.setPassword("VincentPW");
-            libraryUserService.saveUser(libraryUser);
-
-            libraryUser = new LibraryUser();
-            libraryUser.setUsername("Vincent2");
-            libraryUser.setPassword("VincentPW");
-            libraryUserService.saveUser(libraryUser);
-
+            loadUsers();
             loadAuthors();
             loadBooks();
         } catch (IOException | CsvValidationException e) {
             throw new RuntimeException("Failed to initialize database from CSV files", e);
         }
+    }
+
+    private void loadUsers() {
+        LibraryUser libraryUser = new LibraryUser();
+        libraryUser.setUsername("Vincent");
+        libraryUser.setPassword("VincentPW");
+        libraryUserService.saveUser(libraryUser);
     }
 
     private void loadAuthors() throws IOException, CsvValidationException {
