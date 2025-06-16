@@ -5,12 +5,15 @@ import com.opencsv.exceptions.CsvValidationException;
 import nl.miwnn.ch16.vincent.librarydemo.model.Author;
 import nl.miwnn.ch16.vincent.librarydemo.model.Book;
 import nl.miwnn.ch16.vincent.librarydemo.model.Copy;
+import nl.miwnn.ch16.vincent.librarydemo.model.LibraryUser;
 import nl.miwnn.ch16.vincent.librarydemo.repositories.AuthorRepository;
 import nl.miwnn.ch16.vincent.librarydemo.repositories.BookRepository;
 import nl.miwnn.ch16.vincent.librarydemo.repositories.CopyRepository;
+import nl.miwnn.ch16.vincent.librarydemo.service.LibraryUserService;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.context.event.EventListener;
 import org.springframework.core.io.ClassPathResource;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Controller;
 
 import java.io.IOException;
@@ -22,12 +25,15 @@ public class InitializeController {
     private final AuthorRepository authorRepository;
     private final BookRepository bookRepository;
     private final CopyRepository copyRepository;
+    private final LibraryUserService libraryUserService;
+
     private final Map<String, Author> authorCache = new HashMap<>();
 
-    public InitializeController(AuthorRepository authorRepository, BookRepository bookRepository, CopyRepository copyRepository) {
+    public InitializeController(AuthorRepository authorRepository, BookRepository bookRepository, CopyRepository copyRepository, LibraryUserService libraryUserService) {
         this.authorRepository = authorRepository;
         this.bookRepository = bookRepository;
         this.copyRepository = copyRepository;
+        this.libraryUserService = libraryUserService;
     }
 
     @EventListener
@@ -39,6 +45,16 @@ public class InitializeController {
 
     private void initializeDB() {
         try {
+            LibraryUser libraryUser = new LibraryUser();
+            libraryUser.setUsername("Vincent");
+            libraryUser.setPassword("VincentPW");
+            libraryUserService.saveUser(libraryUser);
+
+            libraryUser = new LibraryUser();
+            libraryUser.setUsername("Vincent2");
+            libraryUser.setPassword("VincentPW");
+            libraryUserService.saveUser(libraryUser);
+
             loadAuthors();
             loadBooks();
         } catch (IOException | CsvValidationException e) {
