@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<html lang="en" xmlns:th="https://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org">
 <head th:replace="~{fragments/general :: baseheader(~{:: title})}">
     <title>Book overview</title>
 </head>
@@ -8,7 +8,7 @@
 <div th:replace="~{fragments/general :: navbar}"></div>
 
 <div class="container">
-    <h1>Overview of all the books in the library</h1>
+    <h1 class="dit-is-mijn-random-class-name">Overview of all the books in the library</h1>
 
     <div th:replace="~{fragments/book :: bookCardsNew(${allBooks})}"></div>
 </div>
